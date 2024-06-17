@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const faqs = [
   {
     title: "Where are these chairs assembled?",
@@ -14,7 +16,20 @@ const faqs = [
 ];
 
 function AccordionItem({ title, text, num }) {
-  return <div></div>;
+  const [isOpen, setisOpen] = useState(false);
+
+  function handleOpen() {
+    setisOpen(!isOpen);
+  }
+
+  return (
+    <div className={`item ${isOpen ? "open" : ""}`} onClick={handleOpen}>
+      <p className="number">{num < 9 ? `0${num + 1}` : num + 1}</p>
+      <p className="title">{title}</p>
+      <p className="icon">{isOpen ? "-" : "+"}</p>
+      {isOpen && <div className="content-box">{text}</div>}
+    </div>
+  );
 }
 
 function Accordion({ data }) {
