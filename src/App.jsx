@@ -15,11 +15,10 @@ const faqs = [
   },
 ];
 
-function AccordionItem({ title, text, num }) {
-  const [isOpen, setisOpen] = useState(false);
-
+function AccordionItem({ currOpen, onOpen, title, text, num }) {
+  const isOpen = num === currOpen;
   function handleOpen() {
-    setisOpen(!isOpen);
+    onOpen(isOpen ? null : num); // toggle open state
   }
 
   return (
@@ -33,10 +32,19 @@ function AccordionItem({ title, text, num }) {
 }
 
 function Accordion({ data }) {
+  const [currOpen, setOpen] = useState(null);
+
   return (
     <div className="w-[700px] my-[100px] mx-auto flex flex-col gap-[24px]">
       {data.map((el, i) => (
-        <AccordionItem title={el.title} text={el.text} num={i} key={el.title} />
+        <AccordionItem
+          currOpen={currOpen}
+          onOpen={setOpen}
+          title={el.title}
+          text={el.text}
+          num={i}
+          key={el.title}
+        />
       ))}
     </div>
   );
